@@ -1,0 +1,1094 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nguyen Phan Tri Dat - IT System Administrator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset và font chung */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Biến màu sắc */
+        :root {
+            --primary: #2980b9;
+            --secondary: #2ecc71;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --accent: #e74c3c;
+        }
+
+        /* Hiệu ứng scroll mượt */
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        /* Lớp overlay tinh tế */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: -1;
+        }
+
+        /* Header mới - Hiện đại */
+        header {
+            background: linear-gradient(135deg, rgba(41, 128, 185, 0.95) 0%, rgba(46, 204, 113, 0.9) 100%);
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Hiệu ứng sóng cho header */
+        .wave {
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="%23ffffff" opacity=".1"/><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" fill="%23ffffff" opacity=".3"/><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%23ffffff"/></svg>');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        /* Container header */
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Avatar với hiệu ứng */
+        .avatar {
+            width: 290px;
+            height: 290px;
+            border-radius: 50%;
+            border: 5px solid white;
+            object-fit: cover;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.5s ease;
+            margin-bottom: 1.5rem;
+            transform: translateY(0);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* Tiêu đề header */
+        .header-title {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to right, white, #f1f1f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        /* Thanh điều hướng */
+        nav {
+            background-color: rgba(44, 62, 80, 0.95);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.7rem 1.5rem;
+            margin: 0 0.5rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary);
+        }
+
+        .nav-link:hover::before {
+            width: 70%;
+        }
+
+        /* Nút CTA */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(46, 204, 113, 0.6);
+            background-color: #27ae60;
+        }
+
+        .cta-button i {
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Phần nội dung chính */
+        .main-content {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Section styling */
+        section {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        section.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--secondary);
+            font-size: 2rem;
+            position: relative;
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        /* Timeline kinh nghiệm */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--primary);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--secondary);
+            border: 2px solid var(--primary);
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-item:hover::before {
+            transform: scale(1.3);
+        }
+
+        .timeline-date {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .timeline-company {
+            font-weight: bold;
+            margin: 0.5rem 0;
+            color: var(--dark);
+        }
+
+        .timeline-position {
+            font-style: italic;
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+
+        .timeline-desc ul {
+            margin-left: 1.5rem;
+        }
+
+        .timeline-desc li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            transition: padding-left 0.3s ease;
+        }
+
+        .timeline-desc li:hover {
+            padding-left: 10px;
+        }
+
+        .timeline-desc li::before {
+            content: '▹';
+            position: absolute;
+            left: -15px;
+            color: var(--primary);
+        }
+
+        /* Khóa học */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .course-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .course-img {
+            height: 200px;
+            background-color: var(--primary);
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s ease;
+        }
+
+        .course-card:hover .course-img {
+            transform: scale(1.1);
+        }
+
+        .course-content {
+            padding: 1.5rem;
+            position: relative;
+            z-index: 1;
+            background-color: white;
+        }
+
+        .course-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            transition: color 0.3s ease;
+        }
+
+        .course-card:hover .course-title {
+            color: var(--secondary);
+        }
+
+        .course-desc {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+
+        /* Form liên hệ */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+            outline: none;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+        }
+
+        .submit-btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            background-color: #27ae60;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .submit-btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+
+        /* Kỹ năng */
+        .skills-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .skill-item {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 5px;
+            border-left: 4px solid var(--primary);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 5rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+
+        .social-link {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 1rem;
+            transition: all 0.3s ease;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-5px) rotate(10deg);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-title {
+                font-size: 2.2rem;
+            }
+            
+            .header-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-link {
+                margin: 0.3rem 0;
+                width: 100%;
+                text-align: center;
+            }
+            
+            section {
+                padding: 1.5rem;
+                margin: 1.5rem 0;
+            }
+            
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        nav {
+            background-color: rgba(44, 62, 80, 0.95);
+            padding: 1rem 0;
+            position: fixed;
+            top: -70px; /* Ẩn nav ban đầu */
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            transition: top 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        body:hover nav {
+            top: 0;
+            opacity: 1;
+        }
+
+        /* Đảm bảo nội dung không bị che khi nav hiện ra */
+        .main-content {
+            margin-top: 20px;
+        }
+
+        /* Responsive: Trên mobile luôn hiển thị nav */
+        @media (max-width: 768px) {
+            nav {
+                top: 0;
+                opacity: 1;
+                position: sticky;
+            }
+
+            body:hover nav {
+                top: 0;
+            }
+        }
+        body {
+            position: relative;
+            color: #333;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .background-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+            .background-slide.active {
+                opacity: 1;
+            }
+
+        /* Lớp overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: -1;
+        }
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+            .dropdown-toggle i {
+                font-size: 0.8em;
+                transition: transform 0.3s ease;
+            }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: rgba(44, 62, 80, 0.95);
+            min-width: 200px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown:hover .dropdown-toggle i {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 0.7rem 1.5rem;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+            .dropdown-item:hover {
+                background-color: rgba(255,255,255,0.1);
+                border-left: 3px solid var(--secondary);
+                padding-left: 1.8rem;
+            }
+
+        /* Đảm bảo dropdown không bị cắt khi scroll */
+        @media (min-width: 769px) {
+            .dropdown-menu {
+                position: absolute;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Thêm container cho background -->
+    <div class="background-container">
+        <div class="background-slide active" style="background-image: url('bg1.jpg');"></div>
+        <div class="background-slide" style="background-image: url('bg2.jpg');"></div>
+        <div class="background-slide" style="background-image: url('bg3.jpg');"></div>
+    </div>
+    <!-- Navigation -->
+<nav>
+    <div class="nav-container">
+        <a href="#about" class="nav-link">Giới thiệu</a>
+        <a href="#skills" class="nav-link">Kỹ năng</a>
+        <a href="#experience" class="nav-link">Kinh nghiệm</a>
+        <a href="#courses" class="nav-link">Khóa học</a>
+        <div class="dropdown">
+            <a href="#" class="nav-link dropdown-toggle">Tải phần mềm <i class="fas fa-chevron-down"></i></a>
+            <div class="dropdown-menu">
+                <a href="https://drive.google.com/drive/folders/1D0vlWJ5F0NiroljhJwiFB5oPvcpV1yzQ?usp=drive_link" class="dropdown-item" target="_blank">Thiết kế nột thất</a>
+                <a href="https://drive.google.com/drive/folders/1Lx2Z8pmcm--NqaKpANFRaYA7Ckjs6Ooo?usp=drive_link" class="dropdown-item" target="_blank">Thiết kế đồ họa</a>
+                <a href="https://drive.google.com/drive/folders/1Lo1o_GTdz2KTtNgdgYOSCJBlcgfx7TpL?usp=sharing" class="dropdown-item" target="_blank">Dựng phim</a>
+                <a href="https://link-phan-mem-3.com" class="dropdown-item" target="_blank">Thiết kế game</a>
+                <a href="https://drive.google.com/drive/folders/1BPvx5CAyqfre2QD_noHEutk9F1suXkru?usp=drive_link" class="dropdown-item" target="_blank">Các phiên bản Window</a>
+
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <!-- Header mới với hiệu ứng -->
+    <header>
+        <div class="wave"></div>
+        <div class="header-container">
+            <img src="avt.png" alt="Nguyen Phan Tri Dat" class="avatar">
+            <h1 class="header-title">NGUYEN PHAN TRI DAT</h1>
+            <p class="header-subtitle">IT SYSTEM ADMINISTRATOR</p>
+            <p class="header-subtitle">IT SUPPORT</p>
+            <div class="contact-info">
+                <p><i class="fas fa-phone"></i> 09.4939.9047 | <i class="fas fa-envelope"></i> tridatowlmht@gmail.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> Tan Binh, Ho Chi Minh City</p>
+            </div>
+            <a href="#contact" class="cta-button">Liên hệ ngay <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </header>
+
+
+
+    <!-- Main content -->
+    <div class="main-content">
+        <!-- Giới thiệu -->
+        <section id="about">
+            <h2>Giới thiệu</h2>
+            <p>Làm việc trong môi trường chuyên nghiệp để phát triển kỹ năng và thăng tiến. Hướng tới vị trí IT Manager trong tương lai, áp dụng chuyên môn kỹ thuật và kỹ năng lãnh đạo để thúc đẩy thành công của nhóm và đổi mới công nghệ.</p>
+
+            <h3>Học vấn</h3>
+            <p>
+                <strong>Đại học Ngoại ngữ - Tin học TP.HCM (HUFLIT)</strong><br>
+                Chuyên ngành Công nghệ Thông tin (2021 - 2025)
+            </p>
+
+            <h3>Chứng chỉ</h3>
+            <p>
+                <strong>IT SYSTEM ADMINISTRATOR</strong><br>
+                Chương trình đào tạo phát triển bởi iLAB, thay thế cho MCSA và MCSE (01/2025)
+            </p>
+        </section>
+
+        <!-- Kỹ năng -->
+        <section id="skills">
+            <h2>Kỹ năng chuyên môn</h2>
+            <div class="skills-list">
+                <div class="skill-item">Lắp ráp & bảo trì máy tính</div>
+                <div class="skill-item">Xử lý sự cố mạng</div>
+                <div class="skill-item">Microsoft Office Suite</div>
+                <div class="skill-item">AWS cloud computing (Cơ bản)</div>
+                <div class="skill-item">Hyper-V, VMware</div>
+                <div class="skill-item">CCNA</div>
+                <div class="skill-item">MCSA & MCSE</div>
+                <div class="skill-item">Giải quyết vấn đề</div>
+                <div class="skill-item">Tiếng Anh cơ bản</div>
+                <div class="skill-item">Giao tiếp</div>
+            </div>
+        </section>
+
+        <!-- Kinh nghiệm -->
+        <section id="experience">
+            <h2>Kinh nghiệm làm việc</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">05/2024 - 08/2024</div>
+                    <div class="timeline-company">GOFATECH TECHNOLOGY SERVICES CO., LT</div>
+                    <div class="timeline-position">Thực tập sinh</div>
+                    <div class="timeline-desc">
+                        <ul>
+                            <li>Nghiên cứu các quy trình liên quan đến CNTT</li>
+                            <li>Bảo trì và vệ sinh phần cứng</li>
+                            <li>Cấu hình tường lửa Pfsense</li>
+                            <li>Phát triển tài liệu hỗ trợ người dùng</li>
+                            <li>Xử lý sự cố máy tính và phần cứng liên quan đến người dùng cuối</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">08/2024</div>
+                    <div class="timeline-company">MINH HUNG M&C</div>
+                    <div class="timeline-position">Cộng tác viên</div>
+                    <div class="timeline-desc">
+                        <ul>
+                            <li>Kiểm tra và xử lý sự cố hệ thống mạng</li>
+                            <li>Lắp đặt máy tính, máy in, camera,... trong văn phòng</li>
+                            <li>Kiểm tra hệ thống và sao lưu dữ liệu</li>
+                            <li>Xử lý sự cố người dùng</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">10/2024</div>
+                    <div class="timeline-company">GREEN ACADEMY</div>
+                    <div class="timeline-position">Hỗ trợ IT</div>
+                    <div class="timeline-desc">
+                        <ul>
+                            <li>Hỗ trợ cài đặt phần mềm và hệ điều hành Windows trên máy tính cá nhân và laptop</li>
+                            <li>Hỗ trợ sinh viên và nhân viên khi gặp sự cố kỹ thuật máy tính</li>
+                            <li>Giải quyết sự cố với máy tính cá nhân, laptop, máy in, máy chiếu của công ty</li>
+                            <li>Kiểm tra và xử lý sự cố hệ thống mạng</li>
+                            <li>Lắp đặt máy tính, máy in, camera trong văn phòng</li>
+                            <li>Viết tài liệu hướng dẫn sử dụng</li>
+                            <li>Phát triển website</li>
+                            <li>Phát triển kênh truyền thông xã hội</li>
+                            <li>Hỗ trợ sinh viên</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Khóa học -->
+        <section id="courses">
+            <h2>Các khóa học tại Green Academy</h2>
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-img" style="background-image:url('2d.jpg');"></div>
+                    <div class="course-content">
+                        <h3 class="course-title">THIẾT KẾ ĐỒ HỌA 2D</h3>
+                        <p class="course-desc">Khóa học phù hợp với những người yêu thiết kế và nghệ thuật, muốn biến ước mơ thành nghề nghiệp tương lai, trở thành designer chuyên nghiệp sau 8 tháng.</p>
+                        <a href="#contact" class="btn">Đăng ký ngay</a>
+                    </div>
+                </div>
+
+                <div class="course-card">
+                    <div class="course-img" style="background-image:url('3d.jpg');"></div>
+                    <div class="course-content">
+                        <h3 class="course-title">THIẾT KẾ NỘI THẤT 3D</h3>
+                        <p class="course-desc">Khóa học phù hợp với tất cả các đối tượng yêu thích lĩnh vực Thiết kế nội thất, đam mê công việc thổi hồn cho mái ấm của mỗi gia đình..</p>
+                        <a href="#contact" class="btn">Đăng ký ngay</a>
+                    </div>
+                </div>
+
+                <div class="course-card">
+                    <div class="course-img" style="background-image:url('dung phim.jpg');"></div>
+                    <div class="course-content">
+                        <h3 class="course-title">DỰNG PHIM</h3>
+                        <p class="course-desc">Dựng phim là sự kết hợp giữa kỹ thuật và nghệ thuật. Vậy nên, một chuyên gia dựng phim chuyên nghiệp cần phải sở hữu cả hai kỹ năng: Kỹ thuật làm phim và nghệ thuật làm phim.</p>
+                        <a href="#contact" class="btn">Đăng ký ngay</a>
+                    </div>
+                </div>
+
+                <div class="course-card">
+                    <div class="course-img" style="background-image:url('gamedev.jpg');"></div>
+                    <div class="course-content">
+                        <h3 class="course-title">GAME DEVELOPER</h3>
+                        <p class="course-desc">Khóa học lập trình game của học viện Green Academy giúp bạn xây dựng một thế giới game 2D và 3D trên nhiều nền tảng ứng dụng như Web, PC, Mac, Android, iOS… .</p>
+                        <a href="#contact" class="btn">Đăng ký ngay</a>
+                    </div>
+                </div>
+
+                <div class="course-card">
+                    <div class="course-img" style="background-image:url('korean.jpg');"></div>
+                    <div class="course-content">
+                        <h3 class="course-title">TIẾNG HÀN</h3>
+                        <p class="course-desc">Các khóa học tiếng Hàn từ sơ cấp đến nâng cao giúp bạn hoàn thiện kỹ năng sử dụng tiếng Hàn một cách chuyện nghiệp để bạn trở thành một “Master” tiếng Hàn.</p>
+                        <a href="#contact" class="btn">Đăng ký ngay</a>
+                    </div>
+                </div>
+
+                <div class="course-card">
+                    <div class="course-img" style="background-image:url('onl.jpg');"></div>
+                    <div class="course-content">
+                        <h3 class="course-title">KHÓA HỌC ONLINE</h3>
+                        <p class="course-desc">Lựa chọn thiết làm chủ ngành học yêu thích tại nhà.</p>
+                        <a href="#contact" class="btn">Đăng ký ngay</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- Liên hệ -->
+        <section id="contact">
+            <h2>Liên hệ tư vấn</h2>
+            <form id="consultation-form">
+                <div class="form-group">
+                    <label for="name">Họ và tên</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Số điện thoại</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="course">Khóa học quan tâm</label>
+                    <select id="course" name="course">
+                        <option value="">-- Chọn khóa học --</option>
+                        <option value="2d">Thiết kể đồ họa 2D</option>
+                        <option value="3d">Thiết kế nội thất</option>
+                        <option value="dev">Lập trình game</option>
+                        <option value="flim">Dựng phim</option>
+                        <option value="korean">Tiếng Hàn</option>
+                        <option value="topik">Ôn thi Topik</option>
+                        <option value="seo">SEO</option>
+                        <option value="other">Khác</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Nội dung yêu cầu</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Gửi yêu cầu</button>
+            </form>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <h3>NGUYEN PHAN TRI DAT</h3>
+        <p>IT SYSTEM ADMINISTRATOR</p>
+        <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+        </div>
+        <p>© 2024 Bản quyền thuộc về Nguyen Phan Tri Dat</p>
+    </footer>
+
+    <script>
+        // Hiệu ứng khi scroll
+        const sections = document.querySelectorAll('section');
+
+        function checkScroll() {
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+
+                if (sectionTop < windowHeight * 0.75) {
+                    section.classList.add('visible');
+                }
+            });
+        }
+
+        // Kiểm tra ngay khi load trang
+        window.addEventListener('load', checkScroll);
+
+        // Kiểm tra khi scroll
+        window.addEventListener('scroll', checkScroll);
+
+        // Background slideshow (nếu muốn)
+        const backgrounds = ['bg1.jpg', 'bg2.jpg', 'bg3.jpg'];
+        let currentBg = 0;
+
+        function changeBackground() {
+            currentBg = (currentBg + 1) % backgrounds.length;
+            document.body.style.backgroundImage = `url(${backgrounds[currentBg]})`;
+            document.body.style.transition = 'background-image 1.5s ease-in-out';
+        }
+
+        // Bỏ comment dòng dưới nếu muốn chuyển background tự động
+        // setInterval(changeBackground, 5000);
+
+        // Hiệu ứng cho avatar
+        const avatar = document.querySelector('.avatar');
+        avatar.addEventListener('mouseenter', () => {
+            avatar.style.transform = 'scale(1.1) rotate(5deg)';
+        });
+
+        avatar.addEventListener('mouseleave', () => {
+            avatar.style.transform = 'scale(1) rotate(0)';
+        });
+
+        // Xử lý form
+        async function handleSubmit(e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+
+            try {
+                // Hiển thị trạng thái loading
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
+
+                const formData = {
+                    name: form.querySelector('#name').value.trim(),
+                    email: form.querySelector('#email').value.trim(),
+                    phone: form.querySelector('#phone').value.trim(),
+                    course: form.querySelector('#course').value,
+                    message: form.querySelector('#message').value.trim()
+                };
+
+                // URL mới sau khi deploy lại
+                const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyuqQDeQvRuuXAZe88HTg6K-alNXfGgbNQvvhfRvig_9kfy8udcL_sTFxM1f3yFZ3uB/exec';
+
+                // Cách 1: Dùng fetch bình thường
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Origin': window.location.origin
+                    },
+                    body: JSON.stringify(formData),
+                    referrerPolicy: 'no-referrer'
+                });
+
+
+                const result = await response.json();
+                console.log('Kết quả:', result);
+
+                if (result.success) {
+                    alert('✔️ Gửi thành công!');
+                    form.reset();
+                } else {
+                    throw new Error(result.error || 'Lỗi từ server');
+                }
+            } catch (error) {
+                console.error('Lỗi chi tiết:', error);
+                alert(`❌ Lỗi: ${error.message}\n\nMở Console (F12) để xem chi tiết lỗi.`);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        }
+
+        document.getElementById('consultation-form').addEventListener('submit', handleSubmit);
+    </script>
+    <script>
+        // (Giữ nguyên tất cả script trước đó)
+
+        // Thêm hiệu ứng trễ cho nav
+        let navTimer;
+        const nav = document.querySelector('nav');
+
+        // Hiển thị nav khi chuột vào đầu trang
+        document.addEventListener('mousemove', (e) => {
+            if (e.clientY < 50) { // Nếu chuột ở top 50px
+                clearTimeout(navTimer);
+                nav.style.top = '0';
+                nav.style.opacity = '1';
+            }
+        });
+
+        // Ẩn nav sau 3 giây không di chuyển chuột
+        document.addEventListener('mousemove', () => {
+            clearTimeout(navTimer);
+            navTimer = setTimeout(() => {
+                if (window.innerWidth > 768) { // Chỉ ẩn trên desktop
+                    nav.style.top = '-70px';
+                    nav.style.opacity = '0';
+                }
+            }, 500);
+        });
+    </script>
+    <script>
+        // Chuyển đổi background
+        let currentBgSlide = 0;
+        const bgSlides = document.querySelectorAll('.background-slide');
+
+        function changeBackground() {
+            // Ẩn slide hiện tại
+            bgSlides[currentBgSlide].classList.remove('active');
+
+            // Chuyển sang slide tiếp theo
+            currentBgSlide = (currentBgSlide + 1) % bgSlides.length;
+
+            // Hiển thị slide mới
+            bgSlides[currentBgSlide].classList.add('active');
+        }
+
+        // Tự động chuyển sau mỗi 5 giây
+        setInterval(changeBackground, 5000);
+    </script>
+</body>
+</html>
