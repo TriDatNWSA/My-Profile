@@ -997,59 +997,36 @@
         // Xử lý form
         async function handleSubmit(e) {
             e.preventDefault();
-            console.log('Bắt đầu xử lý form...');
 
             const form = e.target;
             const submitBtn = form.querySelector('button[type="submit"]');
-
-            if (!submitBtn) {
-                console.error('Không tìm thấy nút submit!');
-                return;
-            }
-
             const originalText = submitBtn.innerHTML;
 
             try {
                 submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
+                submitBtn.innerHTML = 'Đang gửi...';
 
                 const formData = {
-                    name: form.querySelector('#name').value.trim(),
-                    email: form.querySelector('#email').value.trim(),
-                    phone: form.querySelector('#phone').value.trim(),
+                    name: form.querySelector('#name').value,
+                    email: form.querySelector('#email').value,
+                    phone: form.querySelector('#phone').value,
                     course: form.querySelector('#course').value,
-                    message: form.querySelector('#message').value.trim()
+                    message: form.querySelector('#message').value
                 };
 
-                console.log('Dữ liệu form:', formData);
+                // Sử dụng URL đặc biệt để bypass CORS
+                const SCRIPT_URL = `https://script.google.com/macros/s/AKfycbzXFBwtASgnqEy6JnTeYx9ylcif-w6vLKOd3kQs3U9km8CwuBPtImiUAcbiMFmNMEQe6Q/exec`;
 
-                const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxtnczDP2MimXRtGy-ndeLHGFhhYWYbdh0E_ucOMIZSHPOJCMvfdZkCYluhsVTkD4vUGA/exec';
+                // Sử dụng JSONP thay vì fetch
+                const script = document.createElement('script');
+                script.src = `${SCRIPT_URL}&${new URLSearchParams(formData)}`;
+                document.body.appendChild(script);
 
-                // Thêm mode 'no-cors' nếu cần
-                const response = await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors', // Thử bỏ dòng này nếu không hoạt động
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData)
-                });
-
-                // Xử lý response đơn giản hơn
-                const text = await response.text();
-                let result;
-                try {
-                    result = JSON.parse(text);
-                } catch {
-                    result = { success: true }; // Nếu không parse được, coi như thành công
-                }
-
-                alert(result.success ? '✔️ Gửi thành công!' : '❌ Gửi thất bại!');
-                if (result.success) form.reset();
-
+                alert('Gửi thành công!');
+                form.reset();
             } catch (error) {
-                console.error('Lỗi chi tiết:', error);
-                alert('❌ Có lỗi xảy ra khi gửi form');
+                console.error('Lỗi:', error);
+                alert('Gửi thất bại: ' + error.message);
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalText;
