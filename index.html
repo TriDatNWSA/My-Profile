@@ -997,6 +997,7 @@
         // Xử lý form
         async function handleSubmit(e) {
             e.preventDefault();
+            console.log('Bắt đầu xử lý form...');
 
             const form = e.target;
             const submitBtn = form.querySelector('button[type="submit"]');
@@ -1004,29 +1005,33 @@
 
             try {
                 submitBtn.disabled = true;
-                submitBtn.innerHTML = 'Đang gửi...';
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
 
                 const formData = {
-                    name: form.querySelector('#name').value,
-                    email: form.querySelector('#email').value,
-                    phone: form.querySelector('#phone').value,
+                    name: form.querySelector('#name').value.trim(),
+                    email: form.querySelector('#email').value.trim(),
+                    phone: form.querySelector('#phone').value.trim(),
                     course: form.querySelector('#course').value,
-                    message: form.querySelector('#message').value
+                    message: form.querySelector('#message').value.trim()
                 };
 
-                // Sử dụng URL đặc biệt để bypass CORS
-                const SCRIPT_URL = `https://script.google.com/macros/s/AKfycbzXFBwtASgnqEy6JnTeYx9ylcif-w6vLKOd3kQs3U9km8CwuBPtImiUAcbiMFmNMEQe6Q/exec`;
+                // Sử dụng URL deployment mới của bạn
+                const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzved75ZyOUSE3GpKTqsXiJRuhcyFIcHU214w1TsONo_7J4OSTEGVGO1hzVPYCHVrHpNA/exec';
 
-                // Sử dụng JSONP thay vì fetch
-                const script = document.createElement('script');
-                script.src = `${SCRIPT_URL}&${new URLSearchParams(formData)}`;
-                document.body.appendChild(script);
+                // Sử dụng phương thức GET với query parameters
+                const queryParams = new URLSearchParams(formData).toString();
+                const response = await fetch(`${SCRIPT_URL}?${queryParams}`, {
+                    method: 'GET',
+                    mode: 'no-cors' // Quan trọng: sử dụng no-cors mode
+                });
 
-                alert('Gửi thành công!');
+                // Không thể đọc response với mode 'no-cors' nên coi như luôn thành công
+                alert('✔️ Gửi thành công! Cảm ơn bạn đã liên hệ.');
                 form.reset();
+
             } catch (error) {
-                console.error('Lỗi:', error);
-                alert('Gửi thất bại: ' + error.message);
+                console.error('Lỗi chi tiết:', error);
+                alert('❌ Có lỗi xảy ra khi gửi form. Vui lòng thử lại sau.');
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalText;
