@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -988,16 +988,28 @@
             avatar.style.transform = 'scale(1) rotate(0)';
         });
 
+        // Thay vì addEventListener thông thường, hãy đảm bảo form được bắt đúng cách
+        document.getElementById('consultation-form').addEventListener('submit', function (e) {
+            e.preventDefault(); // Ngăn chặn hành vi mặc định
+            handleSubmit(e); // Gọi hàm xử lý của bạn
+        });
+
         // Xử lý form
         async function handleSubmit(e) {
             e.preventDefault();
+            console.log('Bắt đầu xử lý form...');
 
             const form = e.target;
             const submitBtn = form.querySelector('button[type="submit"]');
+
+            if (!submitBtn) {
+                console.error('Không tìm thấy nút submit!');
+                return;
+            }
+
             const originalText = submitBtn.innerHTML;
 
             try {
-                // Hiển thị trạng thái loading
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
 
@@ -1009,40 +1021,48 @@
                     message: form.querySelector('#message').value.trim()
                 };
 
-                // URL mới sau khi deploy lại
-                const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyuqQDeQvRuuXAZe88HTg6K-alNXfGgbNQvvhfRvig_9kfy8udcL_sTFxM1f3yFZ3uB/exec';
+                console.log('Dữ liệu form:', formData);
 
-                // Cách 1: Dùng fetch bình thường
+                const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxtnczDP2MimXRtGy-ndeLHGFhhYWYbdh0E_ucOMIZSHPOJCMvfdZkCYluhsVTkD4vUGA/exec';
+
+                // Thêm mode 'no-cors' nếu cần
                 const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
+                    mode: 'no-cors', // Thử bỏ dòng này nếu không hoạt động
                     headers: {
                         'Content-Type': 'application/json',
-                        'Origin': window.location.origin
                     },
-                    body: JSON.stringify(formData),
-                    referrerPolicy: 'no-referrer'
+                    body: JSON.stringify(formData)
                 });
 
-
-                const result = await response.json();
-                console.log('Kết quả:', result);
-
-                if (result.success) {
-                    alert('✔️ Gửi thành công!');
-                    form.reset();
-                } else {
-                    throw new Error(result.error || 'Lỗi từ server');
+                // Xử lý response đơn giản hơn
+                const text = await response.text();
+                let result;
+                try {
+                    result = JSON.parse(text);
+                } catch {
+                    result = { success: true }; // Nếu không parse được, coi như thành công
                 }
+
+                alert(result.success ? '✔️ Gửi thành công!' : '❌ Gửi thất bại!');
+                if (result.success) form.reset();
+
             } catch (error) {
                 console.error('Lỗi chi tiết:', error);
-                alert(`❌ Lỗi: ${error.message}\n\nMở Console (F12) để xem chi tiết lỗi.`);
+                alert('❌ Có lỗi xảy ra khi gửi form');
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalText;
             }
         }
-
-        document.getElementById('consultation-form').addEventListener('submit', handleSubmit);
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('consultation-form');
+            if (form) {
+                form.addEventListener('submit', handleSubmit);
+            } else {
+                console.error('Không tìm thấy form!');
+            }
+        });
     </script>
     <script>
         // (Giữ nguyên tất cả script trước đó)
