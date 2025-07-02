@@ -995,10 +995,7 @@
         });
 
         // Thay vì addEventListener thông thường, hãy đảm bảo form được bắt đúng cách
-        document.getElementById('consultation-form').addEventListener('submit', function (e) {
-            e.preventDefault(); // Ngăn chặn hành vi mặc định
-            handleSubmit(e); // Gọi hàm xử lý của bạn
-        });
+
 
         // Xử lý form
         async function handleSubmit(e) {
